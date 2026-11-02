@@ -1,8 +1,11 @@
-
+// ROUTES : associe URL + méthode HTTP -> controller
 const express = require("express");
-const router = express.Router();
 const OlonaController = require("../controllers/olonaController");
 
-router.post("/", OlonaController.create);
+const router = express.Router();
+
+router.post("/", OlonaController.creer);
+router.get("/", OlonaController.lister);
+router.delete("/:id", OlonaController.supprimer);
 
 module.exports = router;

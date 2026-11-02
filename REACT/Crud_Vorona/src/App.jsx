@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import Create from './Pages/Create'
+import List from './Pages/List'
 import './App.css'
 import Update from './Pages/Update'
 
@@ -8,11 +9,13 @@ function App() {
     <>
       <nav style={styles.nav}>
         <Link to="/" style={styles.link}>Accueil</Link>
+        <Link to="/olona" style={styles.link}>Liste des Olona</Link>
         <Link to="/olona/creer" style={styles.link}>Créer un Olona</Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/olona" element={<List />} />
         <Route path="/olona/creer" element={<Create />} />
         <Route path="/olona/modifier" element={<Update />} />
       </Routes>
