@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import InputField from "../components/InputField";
+import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
 
 const API = "http://localhost:3001";
 
@@ -29,7 +32,7 @@ function Update() {
 
                 setFormData({ nom: data.nom, prenom: data.prenom });
             } catch (err) {
-                setError(` ${err.message}`);
+                setError(err.message);
             }
         };
 
@@ -62,116 +65,42 @@ function Update() {
             }
 
             setMessage("Utilisateur modifié avec succès !");
-            setTimeout(() => navigate("/"), 1000);
+            setTimeout(() => navigate("/olona"), 1000);
         } catch (err) {
-            setError(` ${err.message}`);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div style={styles.container}>
-            <h2 style={styles.title}>Modifier un utilisateur</h2>
+        <div>
+            <h2>Modifier un utilisateur</h2>
 
-            <form onSubmit={handleSubmit} style={styles.form}>
-                <div style={styles.field}>
-                    <label htmlFor="nom" style={styles.label}>
-                        Nom
-                    </label>
-                    <input
-                        id="nom"
-                        type="text"
-                        name="nom"
-                        value={formData.nom}
-                        onChange={handleChange}
-                        placeholder="Entrez le nom"
-                        required
-                        style={styles.input}
-                    />
-                </div>
-
-                <div style={styles.field}>
-                    <label htmlFor="prenom" style={styles.label}>
-                        Prénom
-                    </label>
-                    <input
-                        id="prenom"
-                        type="text"
-                        name="prenom"
-                        value={formData.prenom}
-                        onChange={handleChange}
-                        placeholder="Entrez le prénom"
-                        required
-                        style={styles.input}
-                    />
-                </div>
-
-                <button type="submit" disabled={loading} style={styles.button}>
-                    {loading ? "Modification en cours..." : "Modifier"}
-                </button>
+            <form onSubmit={handleSubmit}>
+                <InputField
+                    id="nom"
+                    label="Nom"
+                    name="nom"
+                    value={formData.nom}
+                    onChange={handleChange}
+                    placeholder="Entrez le nom"
+                />
+                <InputField
+                    id="prenom"
+                    label="Prénom"
+                    name="prenom"
+                    value={formData.prenom}
+                    onChange={handleChange}
+                    placeholder="Entrez le prénom"
+                />
+                <Button texte="Modifier" loading={loading} />
             </form>
 
-            {message && <p style={styles.success}>{message}</p>}
-            {error && <p style={styles.error}>{error}</p>}
+            {message && <p style={{ color: "#16a34a", fontWeight: "600" }}>{message}</p>}
+            <ErrorMessage message={error} />
         </div>
     );
 }
 
-const styles = {
-    container: {
-        maxWidth: "480px",
-        margin: "40px auto",
-        padding: "24px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-        fontFamily: "Arial, sans-serif",
-        backgroundColor: "#ffffff",
-    },
-    title: {
-        marginBottom: "20px",
-        color: "#333",
-    },
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "16px",
-    },
-    field: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "6px",
-    },
-    label: {
-        fontWeight: "600",
-        color: "#555",
-        fontSize: "14px",
-    },
-    input: {
-        padding: "10px 12px",
-        border: "1px solid #ddd",
-        borderRadius: "6px",
-        fontSize: "14px",
-        outline: "none",
-    },
-    button: {
-        padding: "10px",
-        backgroundColor: "#4f46e5",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        fontSize: "15px",
-        cursor: "pointer",
-        fontWeight: "600",
-    },
-    success: {
-        color: "#16a34a",
-        fontWeight: "600",
-    },
-    error: {
-        color: "#dc2626",
-        fontWeight: "600",
-    },
-};
-
-export default Update;
+export default Update;
