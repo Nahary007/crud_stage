@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/olona" element={<List />} />
         <Route path="/olona/creer" element={<Create />} />
-        <Route path="/olona/modifier" element={<Update />} />
+        <Route path="/olona/modifier/:id" element={<Update />} />
       </Routes>
     </>
   )

@@ -26,6 +26,23 @@ const lister = async (req, res) => {
     }
 };
 
+const listerUn = async (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) {
+        return res.status(400).json({ erreur: "id invalide" });
+    }
+    try {
+        const olona = await OlonaModel.listerUn(id);
+        if (!olona) {
+            return res.status(404).json({ erreur: "Olona introuvable" });
+        }
+        return res.json(olona);
+    } catch (err) {
+        console.error("[GET /olona/:id] erreur:", err.message);
+        return res.status(500).json({ erreur: err.message });
+    }
+};
+
 const supprimer = async (req, res) => {
     const id = Number(req.params.id);
 
@@ -45,4 +62,27 @@ const supprimer = async (req, res) => {
     }
 };
 
-module.exports = { creer, lister, supprimer };
+const modifier = async (req, res) => {
+    const id = Number(req.params.id);
+    const { nom, prenom } = req.body;
+
+    if (!Number.isInteger(id)) {
+        return res.status(400).json({ erreur: "id invalide" });
+    }
+    if (!nom || !prenom) {
+        return res.status(400).json({ erreur: "nom et prenom sont obligatoires" });
+    }
+
+    try {
+        const modifie = await OlonaModel.modifier(id, nom, prenom);
+        if (!modifie) {
+            return res.status(404).json({ erreur: "Olona introuvable" });
+        }
+        return res.json(modifie);
+    } catch (err) {
+        console.error("[PUT /olona/:id] erreur:", err.message);
+        return res.status(500).json({ erreur: err.message });
+    }
+};
+
+module.exports = { creer, lister, listerUn, supprimer, modifier };
