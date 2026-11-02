@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
+import { olonaService } from "../services/olonaService";
 import OlonaTable from "../components/OlonaTable";
 import ErrorMessage from "../components/ErrorMessage";
-
-const API_URL = "http://localhost:3001/olona";
 
 function List() {
   const [olonas, setOlonas] = useState([]);
@@ -11,11 +10,7 @@ function List() {
 
   const chargerOlonas = async () => {
     try {
-      const response = await fetch(API_URL);
-      if (!response.ok) {
-        throw new Error(`Erreur serveur : ${response.status}`);
-      }
-      const data = await response.json();
+      const data = await olonaService.listerTous();
       setOlonas(data);
     } catch (err) {
       setError(`❌ ${err.message}`);
@@ -33,10 +28,7 @@ function List() {
 
     setError(null);
     try {
-      const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-      if (!response.ok) {
-        throw new Error(`Erreur serveur : ${response.status}`);
-      }
+      await olonaService.supprimer(id);
       setOlonas(olonas.filter((o) => o.id !== id));
     } catch (err) {
       setError(`❌ ${err.message}`);
@@ -44,8 +36,8 @@ function List() {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Liste des Olona</h2>
+    <div>
+      <h2>Liste des Olona</h2>
 
       <ErrorMessage message={error} />
       {loading && <p>Chargement...</p>}
@@ -56,21 +48,5 @@ function List() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "40px auto",
-    padding: "24px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-    fontFamily: "Arial, sans-serif",
-    backgroundColor: "#ffffff",
-  },
-  title: {
-    marginBottom: "20px",
-    color: "#333",
-  },
-};
 
 export default List;

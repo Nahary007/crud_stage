@@ -1,35 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { olonaService } from "../services/olonaService";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import ErrorMessage from "../components/ErrorMessage";
-
-const API = "http://localhost:3001";
 
 function Update() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        nom: "",
-        prenom: "",
-    });
-
+    const [formData, setFormData] = useState({ nom: "", prenom: "" });
     const [message, setMessage] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // Charger les valeurs actuelles pour préremplir le formulaire
+
     useEffect(() => {
         const charger = async () => {
             try {
-                const response = await fetch(`${API}/olona/${id}`);
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.erreur || `Erreur serveur : ${response.status}`);
-                }
-
+                const data = await olonaService.obtenirParId(id);
                 setFormData({ nom: data.nom, prenom: data.prenom });
             } catch (err) {
                 setError(err.message);
@@ -50,21 +39,8 @@ function Update() {
         setError(null);
 
         try {
-            const response = await fetch(`${API}/olona/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.erreur || `Erreur serveur : ${response.status}`);
-            }
-
-            setMessage("Utilisateur modifié avec succès !");
+            await olonaService.modifier(id, formData.nom, formData.prenom);
+            setMessage("✅ Olona modifié avec succès !");
             setTimeout(() => navigate("/olona"), 1000);
         } catch (err) {
             setError(err.message);
@@ -75,7 +51,7 @@ function Update() {
 
     return (
         <div>
-            <h2>Modifier un utilisateur</h2>
+            <h2>Modifier un Olona</h2>
 
             <form onSubmit={handleSubmit}>
                 <InputField
@@ -97,7 +73,7 @@ function Update() {
                 <Button texte="Modifier" loading={loading} />
             </form>
 
-            {message && <p style={{ color: "#16a34a", fontWeight: "600" }}>{message}</p>}
+            {message && <p>{message}</p>}
             <ErrorMessage message={error} />
         </div>
     );
