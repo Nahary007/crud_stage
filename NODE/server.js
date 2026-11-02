@@ -10,7 +10,7 @@ app.use(express.json({ limit: "50mb" }));
 const db = new Pool({
     host: "localhost",
     user: "postgres",
-    password: "",
+    password: "nana",
     database: "olombelona",
     port: 5432,
 });

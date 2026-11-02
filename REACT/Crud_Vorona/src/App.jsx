@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import Create from './Pages/Create'
 import './App.css'
+import Update from './Pages/Update'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/olona/creer" element={<Create />} />
+        <Route path="/olona/modifier" element={<Update />} />
       </Routes>
     </>
   )
