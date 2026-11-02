@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const API = "http://localhost:3001/api";
+const API = "http://localhost:3001";
 
 function Update() {
     const { id } = useParams();
@@ -20,7 +20,7 @@ function Update() {
     useEffect(() => {
         const charger = async () => {
             try {
-                const response = await fetch(`${API}/User/${id}`);
+                const response = await fetch(`${API}/olona/${id}`);
                 const data = await response.json();
 
                 if (!response.ok) {
@@ -47,7 +47,7 @@ function Update() {
         setError(null);
 
         try {
-            const response = await fetch(`${API}/modifier-User/${id}`, {
+            const response = await fetch(`${API}/olona/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -118,5 +118,60 @@ function Update() {
     );
 }
 
+const styles = {
+    container: {
+        maxWidth: "480px",
+        margin: "40px auto",
+        padding: "24px",
+        borderRadius: "8px",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#ffffff",
+    },
+    title: {
+        marginBottom: "20px",
+        color: "#333",
+    },
+    form: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+    },
+    field: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "6px",
+    },
+    label: {
+        fontWeight: "600",
+        color: "#555",
+        fontSize: "14px",
+    },
+    input: {
+        padding: "10px 12px",
+        border: "1px solid #ddd",
+        borderRadius: "6px",
+        fontSize: "14px",
+        outline: "none",
+    },
+    button: {
+        padding: "10px",
+        backgroundColor: "#4f46e5",
+        color: "#fff",
+        border: "none",
+        borderRadius: "6px",
+        fontSize: "15px",
+        cursor: "pointer",
+        fontWeight: "600",
+    },
+    success: {
+        color: "#16a34a",
+        fontWeight: "600",
+    },
+    error: {
+        color: "#dc2626",
+        fontWeight: "600",
+    },
+};
 
-export default Update;
+export default Update;
