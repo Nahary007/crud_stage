@@ -1,0 +1,31 @@
+## Entrer dans le repository 
+git clone https://github.com/utilisateur/nom-du-depot.git
+
+##
+cd nom-du-depot
+
+
+cd chemin/vers/votre/projet
+
+## Initialiser git
+git init
+
+## Ajouter projet 
+git add .
+
+## Commit 
+git commit -m "Premier commit"
+
+git branch -M main
+git remote add origin https://github.com/Nahary007/crud_stage.git
+git push -u origin main
+
+
+
+
+
+
+
+
+
+https://github.com/Nahary007/crud_stage.git
