@@ -35,4 +35,3 @@ app.listen(3001, () => {
     console.log("Serveur backend démarré sur http://localhost:3001");
 });
 
-
