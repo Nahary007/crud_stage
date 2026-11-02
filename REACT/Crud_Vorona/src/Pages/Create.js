@@ -23,7 +23,7 @@ function Create() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:3000/olona", {
+      const response = await fetch("http://localhost:3001/olona", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
